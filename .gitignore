@@ -30,3 +30,100 @@
 *.exe
 *.out
 *.app
+
+
+###########################
+## openFrameworks IGNORE ##
+###########################
+
+###########################
+# ignore generated binaries
+# but not the data folder
+###########################
+
+*/bin/*
+!*/bin/data/
+bin/*
+!bin/data/
+
+#########
+# general
+#########
+
+*/[Bb]uild/
+[Bb]uild/
+*/[Oo]bj/
+[Oo]bj/
+*.o
+*/[Dd]ebug*/
+[Dd]ebug*/
+*/[Rr]elease*/
+[Rr]elease*/
+*.mode*
+*.app/
+*.pyc
+.svn/
+*.log
+
+########################
+# IDE files which should
+# be ignored
+########################
+
+.vs
+*/.vs
+
+# == XCode
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+# XCode 4
+xcuserdata
+*.xcworkspace
+
+# == Code::Blocks
+*.depend
+*.layout
+
+# == VSCode
+*.code-workspace
+.vscode
+*/.vscode
+
+# == Visual Studio
+*.sdf
+*.opensdf
+*.suo
+*.pdb
+*.ilk
+*.aps
+ipch/
+
+
+##################
+# operating system
+##################
+
+# == Linux
+*~
+# KDE
+.directory
+.AppleDouble
+
+# == OSX
+.DS_Store
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+# == Windows
+# Image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+
+# Android
+.csettings
