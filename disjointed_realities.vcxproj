@@ -1,0 +1,578 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|x64">
+			<Configuration>Debug</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|x64">
+			<Configuration>Release</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
+		<LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
+		<WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+		<TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
+	</PropertyGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+		<Keyword>Win32Proj</Keyword>
+		<RootNamespace>disjointed_realities</RootNamespace>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<TargetName>$(ProjectName)_debug</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<GenerateManifest>true</GenerateManifest>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<TargetName>$(ProjectName)_debug</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<GenerateManifest>true</GenerateManifest>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<LinkIncremental>false</LinkIncremental>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<LinkIncremental>false</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxFBX\libs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\Win32;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\x64;..\..\..\addons\ofxFBX\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSpout\libs;..\..\..\addons\ofxSpout\libs\SpoutSDK;..\..\..\addons\ofxSpout\libs\SpoutSDK\src;..\..\..\addons\ofxSpout\src;..\..\..\addons\ofxSpout\src\ofxSpout</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);assimp32.lib;libfbxsdk-md.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\Win32</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxFBX\libs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\Win32;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\x64;..\..\..\addons\ofxFBX\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSpout\libs;..\..\..\addons\ofxSpout\libs\SpoutSDK;..\..\..\addons\ofxSpout\libs\SpoutSDK\src;..\..\..\addons\ofxSpout\src;..\..\..\addons\ofxSpout\src\ofxSpout</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<MultiProcessorCompilation>true</MultiProcessorCompilation>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);assimp64.lib;libfbxsdk-md.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\x64</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<ClCompile>
+			<WholeProgramOptimization>false</WholeProgramOptimization>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxFBX\libs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\Win32;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\x64;..\..\..\addons\ofxFBX\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSpout\libs;..\..\..\addons\ofxSpout\libs\SpoutSDK;..\..\..\addons\ofxSpout\libs\SpoutSDK\src;..\..\..\addons\ofxSpout\src;..\..\..\addons\ofxSpout\src\ofxSpout</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<MultiProcessorCompilation>true</MultiProcessorCompilation>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);assimp32.lib;libfbxsdk-md.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\Win32</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<ClCompile>
+			<WholeProgramOptimization>false</WholeProgramOptimization>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxFBX\libs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\Win32;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\x64;..\..\..\addons\ofxFBX\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSpout\libs;..\..\..\addons\ofxSpout\libs\SpoutSDK;..\..\..\addons\ofxSpout\libs\SpoutSDK\src;..\..\..\addons\ofxSpout\src;..\..\..\addons\ofxSpout\src\ofxSpout</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);assimp64.lib;libfbxsdk-md.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\lib\vs\x64</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClCompile Include="src\main.cpp" />
+		<ClCompile Include="src\ofApp.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpTexture.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\GetPosition.cxx" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXAnimation.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXBone.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXCluster.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXManager.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXMesh.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXMeshMaterial.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXNode.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXPose.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXScene.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\src\ofxFBXSkeleton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common\AnimationUtility.cxx" />
+		<ClCompile Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common\GeometryUtility.cxx" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\src\ofxSpout\Receiver.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\src\ofxSpout\Sender.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\src\ofxSpout\Utils.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutDirectX.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutGLDXinterop.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutGLextensions.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutMemoryShare.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutReceiver.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSDK.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSender.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSenderNames.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSharedMemory.cpp" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpTexture.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpUtils.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ai_assert.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\anim.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\camera.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cexport.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cfileio.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cimport.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\color4.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\poppack1.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\pstdint.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\pushpack1.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\config.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\DefaultIOStream.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\DefaultIOSystem.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\DefaultLogger.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Defines.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\defs.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Exporter.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Importer.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\importerdesc.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\IOStream.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\IOSystem.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\light.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Logger.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\LogStream.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\material.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\matrix3x3.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\matrix4x4.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\mesh.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\metadata.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\NullLogger.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\postprocess.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ProgressHandler.hpp" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\quaternion.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\scene.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\SceneCombiner.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\texture.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\types.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\vector2.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\vector3.h" />
+		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\version.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\GetPosition.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBX.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXAnimation.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXBone.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXCluster.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXManager.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXMesh.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXMeshMaterial.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXNode.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXPose.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXScene.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXSkeleton.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\src\ofxFBXUtils.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common\AnimationUtility.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common\Common.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\Common\GeometryUtility.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch\fbxalloc.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch\fbxarch.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch\fbxdebug.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch\fbxnew.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch\fbxstdcompliant.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\arch\fbxtypes.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxarray.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxbitset.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxcharptrset.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxcontainerallocators.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxdynamicarray.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxfile.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxfolder.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxhashmap.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxintrusivelist.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxmap.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxmemorypool.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxmultimap.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxpair.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxredblacktree.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxset.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxstatus.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxstring.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxstringlist.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxtime.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxtimecode.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\base\fbxutils.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxclassid.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxconnectionpoint.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxdatatypes.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxemitter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxevent.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxeventhandler.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxlistener.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxloadingstrategy.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxmanager.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxmodule.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxobject.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxperipheral.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxplugin.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxplugincontainer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxproperty.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxpropertydef.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxpropertyhandle.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxpropertypage.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxpropertytypes.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxquery.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxqueryevent.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxscopedloadingdirectory.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxscopedloadingfilename.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxstream.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxsymbol.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxsystemunit.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\fbxxref.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxaffinematrix.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxdualquaternion.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxmath.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxmatrix.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxquaternion.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxtransforms.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxvector2.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\math\fbxvector4.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync\fbxatomic.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync\fbxclock.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync\fbxsync.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\core\sync\fbxthread.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fbxsdk_def.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fbxsdk_nsbegin.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fbxsdk_nsend.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fbxsdk_version.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxcolladaanimationelement.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxcolladaelement.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxcolladaiostream.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxcolladanamespace.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxcolladatokens.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxcolladautils.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxreadercollada14.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\collada\fbxwritercollada14.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxio.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxreaderfbx5.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxreaderfbx6.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxreaderfbx7.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxwriterfbx5.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxwriterfbx6.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbx\fbxwriterfbx7.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxbase64coder.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxexporter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxexternaldocreflistener.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxfiletokens.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxglobalcamerasettings.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxgloballightsettings.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxglobalsettings.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxgobo.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbximporter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxiobase.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxiopluginregistry.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxiosettings.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxiosettingspath.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxprogress.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxreader.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxstatistics.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxstatisticsfbx.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\fileio\fbxwriter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimcurve.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimcurvebase.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimcurvefilters.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimcurvenode.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimevalclassic.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimevalstate.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimevaluator.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimlayer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimstack.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\animation\fbxanimutilities.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxcharacter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxcharacternodename.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxcharacterpose.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraint.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintaim.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintcustom.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintparent.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintposition.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintrotation.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintscale.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintsinglechainik.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxconstraintutils.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxcontrolset.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\constraint\fbxhik2fbxcharacter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxaxissystem.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxcollection.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxcollectionexclusive.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxcontainer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxcontainertemplate.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxdisplaylayer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxdocument.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxdocumentinfo.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxenvironment.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxgroupname.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxlibrary.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxobjectfilter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxobjectmetadata.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxobjectscontainer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxpose.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxreference.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxscene.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxselectionnode.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxselectionset.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxtakeinfo.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxthumbnail.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\fbxvideo.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxblendshape.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxblendshapechannel.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxcache.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxcachedeffect.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxcamera.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxcamerastereo.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxcameraswitcher.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxcluster.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxdeformer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxgenericnode.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxgeometry.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxgeometrybase.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxgeometryweightedmap.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxlayer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxlayercontainer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxlight.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxlimitsutilities.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxline.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxlodgroup.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxmarker.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxmesh.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxnode.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxnodeattribute.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxnull.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxnurbs.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxnurbscurve.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxnurbssurface.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxopticalreference.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxpatch.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxproceduralgeometry.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxshape.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxskeleton.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxskin.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxsubdeformer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxsubdiv.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxtrimnurbssurface.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxvertexcachedeformer.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\geometry\fbxweightedmapping.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxbindingoperator.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxbindingsentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxbindingtable.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxbindingtablebase.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxbindingtableentry.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxconstantentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxfiletexture.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbximplementation.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbximplementationfilter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbximplementationutils.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxlayeredtexture.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxlayerentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxoperatorentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxproceduraltexture.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxpropertyentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxsemanticentryview.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxshadingconventions.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxsurfacelambert.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxsurfacematerial.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxsurfacephong.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\scene\shading\fbxtexture.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxclonemanager.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxdeformationsevaluator.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxembeddedfilesaccumulator.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxgeometryconverter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxmanipulators.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxmaterialconverter.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxnamehandler.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxprocessor.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxprocessorshaderdependency.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxprocessorxref.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxprocessorxrefuserlib.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrenamingstrategy.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrenamingstrategybase.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrenamingstrategyfbx5.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrenamingstrategyfbx6.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrenamingstrategyfbx7.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrenamingstrategyutilities.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxrootnodeutility.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk\utils\fbxusernotification.h" />
+		<ClInclude Include="..\..\..\addons\ofxFBX\libs\fbxsdk_2016.1\include\fbxsdk.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
+		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\src\ofxSpout\Receiver.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\src\ofxSpout\Sender.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\src\ofxSpout\Utils.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\src\ofxSpout.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\Spout.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutCommon.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutDirectX.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutGLDXinterop.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutGLextensions.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutMemoryShare.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutReceiver.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSDK.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSender.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSenderNames.h" />
+		<ClInclude Include="..\..\..\addons\ofxSpout\libs\SpoutSDK\src\SpoutSharedMemory.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+			<Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc">
+			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+			<AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+		</ResourceCompile>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties RESOURCE_FILE="icon.rc" />
+		</VisualStudio>
+	</ProjectExtensions>
+</Project>
