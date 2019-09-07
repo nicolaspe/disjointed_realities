@@ -24,20 +24,27 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		void ofApp::renderTexShaders();
+		void renderTexShaders();
+		void renderUnlitMask();
+		void renderLitMask();
+		void renderBackground();
+		void renderUVTextured();
+		void textureUnlitBlend();
+		void textureShadwBlend();
 		
 		int texWid = 1024; int texHei = 1024;
 		int fboWid = 1280; int fboHei = 720;
 		int texInd = 0;
+		bool bLight, bMapMode, bDebug, bBackground, bInfo;
 
 		ofFbo		texFbo;
-		ofShader	texShaders[4];
+		ofShader	texShaders[4], blendShader, shadwShader;
 
-		ofLight		dirLight;
-		ofImage		skyTex;
+		ofFbo		unlitFbo, litFbo, bgFbo, uvFbo, blendFbo;
+		ofEasyCam   cam1, cam2;
+		ofLight		dirLight, ambLight;
+		ofTexture	skyTex, whiteTex;
 		ofxAssimpModelLoader model;
 
-		ofFbo		fbo1, fbo2;
-		ofEasyCam   cam1, cam2;
 
 };
