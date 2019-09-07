@@ -5,7 +5,7 @@
 *.slo
 *.lo
 *.o
-*.obj
+# *.obj
 
 # Precompiled Headers
 *.gch
@@ -42,8 +42,8 @@
 ###########################
 
 */bin/*
-!*/bin/data/
 bin/*
+!*/bin/data/
 !bin/data/
 
 #########
