@@ -35,10 +35,10 @@ void main(){
 	vec4 texShadw = texture(shadwTex, st);
 
 	vec3 texHsv = rgb2hsv(texColor.rgb);
-	vec3 unlitLuma = luma(texUnlit.rgb);
-	vec3 shadwLuma = luma(texShadw.rgb);
+	float unlitLuma = luma(texUnlit.rgb);
+	float shadwLuma = luma(texShadw.rgb);
 
-	texHsv.z = texHsv.z - abs(unlitLuma-shdwLuma);
+	texHsv.z = texHsv.z - abs(unlitLuma - shadwLuma);
 
     fragColor = vec4(hsv2rgb(texHsv), texUnlit.a);
 }

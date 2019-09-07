@@ -2,9 +2,10 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofSetFrameRate(60);
+	ofSetWindowTitle("disjointed realities v0.0.1");
+	ofSetFrameRate(30);
     ofSetVerticalSync(true);
-	ofSetSmoothLighting(true);
+	//ofSetSmoothLighting(true);
     ofDisableArbTex();
     ofEnableDepthTest();
 	ofEnableAlphaBlending();
@@ -18,12 +19,13 @@ void ofApp::setup(){
 
 
 	// init Fbos
-	texFbo.allocate(texWid, texHei, GL_RGBA);
-	unlitFbo.allocate(fboWid, fboHei, GL_RGBA);
-	litFbo.allocate(fboWid, fboHei, GL_RGBA);
-	uvFbo.allocate(fboWid, fboHei, GL_RGBA);
-	bgFbo.allocate(fboWid, fboHei, GL_RGBA);
-	blendFbo.allocate(fboWid, fboHei, GL_RGBA);
+	texFbo.allocate  (texWid, texHei);
+	unlitFbo.allocate(fboWid, fboHei);
+	litFbo.allocate  (fboWid, fboHei);
+	uvFbo.allocate   (fboWid, fboHei);
+	bgFbo.allocate   (fboWid, fboHei);
+	blendUFbo.allocate(fboWid, fboHei);
+	blendSFbo.allocate(fboWid, fboHei);
 
 
 	// init shaders
@@ -62,28 +64,33 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackground(120 + 120*sin(ofGetElapsedTimef()));
 
+	// render fbos by themselves
+	ofEnableDepthTest();
+
 	renderTexShaders();
 	renderBackground();
+	renderUVTextured();
+	renderUnlitMask();
+	renderLitMask();
+	textureUnlitBlend();
+	textureShadwBlend();
 
-
+	// display fbos on screen
+	ofDisableDepthTest();
 	if (bBackground) { bgFbo.draw(0, 0); }
 	else {}
 
 	if (bMapMode) {
-		renderUVTextured();
 		uvFbo.draw(0, 0);
 	}
 	else{
-		renderUnlitMask();
-		renderLitMask();
 		if (bDebug) {
 			if (!bLight) { unlitFbo.draw(0, 0); }
 			else { litFbo.draw(0, 0); }
 		}
 		else {
-			if (!bLight) { textureUnlitBlend(); }
-			else { textureShadwBlend(); }
-			blendFbo.draw(0, 0);
+			if (!bLight) { blendUFbo.draw(0, 0); }
+			else { blendSFbo.draw(0, 0); }
 		}
 	}
 }
@@ -111,7 +118,7 @@ void ofApp::renderBackground() {
 	ofClear(0, 0);
 	cam1.begin();
 		skyTex.bind();
-		ofDrawSphere(ofPoint(0, 0, 0), 50);
+		ofDrawSphere(ofPoint(0, 0, 0), 5000);
 		skyTex.unbind();
 	cam1.end();
 	bgFbo.end();
@@ -159,17 +166,17 @@ void ofApp::renderLitMask() {
 }
 
 void ofApp::textureUnlitBlend() {
-	blendFbo.begin();
+	blendUFbo.begin();
 	ofClear(0, 0);
 		blendShader.begin();
-		blendShader.setUniformTexture("inTex",   texFbo.getTexture(), 0);
-		blendShader.setUniformTexture("maskTex", unlitFbo.getTexture(), 1);
+		blendShader.setUniformTexture("inTex",   texFbo.getTextureReference(0), 0);
+		blendShader.setUniformTexture("maskTex", unlitFbo.getTextureReference(0), 1);
 		ofDrawRectangle(0, 0, fboWid, fboHei);
 		blendShader.end();
-	blendFbo.end();
+	blendUFbo.end();
 }
 void ofApp::textureShadwBlend() {
-	blendFbo.begin();
+	blendSFbo.begin();
 	ofClear(0, 0);
 		shadwShader.begin();
 		shadwShader.setUniformTexture("inTex",    texFbo.getTexture(), 0);
@@ -177,7 +184,7 @@ void ofApp::textureShadwBlend() {
 		shadwShader.setUniformTexture("shadwTex", unlitFbo.getTexture(), 2);
 		ofDrawRectangle(0, 0, fboWid, fboHei);
 		shadwShader.end();
-	blendFbo.end();
+	blendSFbo.end();
 }
 
 

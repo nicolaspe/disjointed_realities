@@ -40,7 +40,7 @@ class ofApp : public ofBaseApp{
 		ofFbo		texFbo;
 		ofShader	texShaders[4], blendShader, shadwShader;
 
-		ofFbo		unlitFbo, litFbo, bgFbo, uvFbo, blendFbo;
+		ofFbo		unlitFbo, litFbo, bgFbo, uvFbo, blendUFbo, blendSFbo;
 		ofEasyCam   cam1, cam2;
 		ofLight		dirLight, ambLight;
 		ofTexture	skyTex, whiteTex;
