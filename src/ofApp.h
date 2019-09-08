@@ -4,6 +4,9 @@
 #include "ofxAssimpModelLoader.h"
 #include "ofxSpout.h"
 #include "ofxOsc.h"
+#include "ofxFBX.h"
+
+#define N_MIRRORS 4
 
 class ofApp : public ofBaseApp{
 
@@ -24,6 +27,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		void initMirrors();
+		void updateMirrors();
+		void renderMirrorViews();
+
 		void renderTexShaders();
 		void renderUnlitMask();
 		void renderLitMask();
@@ -35,16 +42,24 @@ class ofApp : public ofBaseApp{
 		int texWid = 1024; int texHei = 1024;
 		int fboWid = 1280; int fboHei = 720;
 		int texInd = 0;
-		bool bLight, bMapMode, bDebug, bBackground, bInfo;
+		bool bLight, bMapMode, bDebug, bBackground, bInfo, bTex, bMirrors;
 
 		ofFbo		texFbo;
 		ofShader	texShaders[4], blendShader, shadwShader;
 
 		ofFbo		unlitFbo, litFbo, bgFbo, uvFbo, blendUFbo, blendSFbo;
-		ofEasyCam   cam1, cam2;
+		ofEasyCam   cam1;
 		ofLight		dirLight, ambLight;
 		ofTexture	skyTex, whiteTex;
 		ofxAssimpModelLoader model;
 
+		ofVec2f		mirrorDim[N_MIRRORS];
+		ofVec3f		mirrorPos[N_MIRRORS], mirCamPos[N_MIRRORS];
+		ofCamera	mirrorCam[N_MIRRORS];
+		ofFbo		mirrorFbo[N_MIRRORS], mirrors;
+		ofMesh		mirrorMsh[N_MIRRORS];
+
+		ofxFBXScene   fbxScene;
+		ofxFBXManager fbxMngr;
 
 };
