@@ -14,21 +14,24 @@ void ofApp::setup(){
 	bLight = false;
 	bMapMode = true; 
 	bDebug = false;
-	bBackground = false;
 	bInfo = true;
 	bTex = false;
-	bMirrors = false;
-
+	bBackground	= false;
+	bMirrors	= false;
+	bAnimated	= false;
 
 	// init Fbos
-	texFbo.allocate   (texWid, texHei);
-	unlitFbo.allocate (fboWid, fboHei);
-	litFbo.allocate   (fboWid, fboHei);
-	uvFbo.allocate    (fboWid, fboHei);
-	bgFbo.allocate    (fboWid, fboHei);
-	blendUFbo.allocate(fboWid, fboHei);
-	blendSFbo.allocate(fboWid, fboHei);
-	mirrors.allocate  (fboWid, fboHei);
+	texFbo.allocate			(texWid, texHei, GL_RGBA);
+	unlitFbo.allocate		(fboWid, fboHei, GL_RGBA);
+	litFbo.allocate			(fboWid, fboHei, GL_RGBA);
+	uvFbo.allocate			(fboWid, fboHei, GL_RGBA);
+	bgFbo.allocate			(fboWid, fboHei, GL_RGBA);
+	blendUFbo.allocate		(fboWid, fboHei, GL_RGBA);
+	blendSFbo.allocate		(fboWid, fboHei, GL_RGBA);
+	mirrors.allocate		(fboWid, fboHei, GL_RGBA);
+	sceneBaseFbo.allocate	(fboWid, fboHei, GL_RGBA);
+	sceneFullFbo.allocate	(fboWid, fboHei, GL_RGBA);
+
 
 	// init shaders
 	string vertex = "shaders/shader.vert";
@@ -40,20 +43,25 @@ void ofApp::setup(){
 	shadwShader.load(vertex, "shaders/shadowBlend.frag");
 
 	// init mesh/model
-	ofLoadImage(skyTex, "imgs/eso0932a_sphere.jpg");
-	ofLoadImage(whiteTex, "imgs/white.png");
-	model.loadModel("models/nico_00_sit.obj");
-	model.setRotation(1, 180, 0, 0, 1);
+	//ofLoadImage( skyTex, "imgs/eso0932a_sphere.jpg" );
+	//ofLoadImage( skyTex, "imgs/sky_horizon.jpg" );
+	ofLoadImage( skyTex, "imgs/sky_sea.jpg" );
+	ofLoadImage( whiteTex, "imgs/white.png" );
+	skySphere.setRadius( 5000 );
+	model.loadModel( "models/nico_00_sit.obj" );
+	model.setRotation( 1, 180, 0, 0, 1 );
+	model.setPosition( 0, -100, 0 );
 
 	// init fbx
-	//ofxFBXSceneSettings fbxSettings;
-	//if (fbxScene.load("models/nico_00_walk.fbx", fbxSettings)) {
-	//	cout << "ofApp :: fbx scene load OK" << endl;
-	//} else {
-	//	cout << "ofApp :: ERROR loading fbx scene" << endl;
-	//}
-	//fbxMngr.setup( &fbxScene );
-	//fbxMngr.setAnimation(0);
+	ofxFBXSceneSettings fbxSettings;
+	if (fbxScene.load("models/model.fbx", fbxSettings)) {
+		cout << "ofApp :: fbx scene load OK" << endl;
+	} else {
+		cout << "ofApp :: ERROR loading fbx scene" << endl;
+	}
+	fbxMngr.setup( &fbxScene );
+	fbxMngr.setScale( 2 );
+	fbxMngr.setAnimation( 1 );
 
 	// init camera
     cam1.setPosition(1500, 1200, 2500);
@@ -72,6 +80,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	fbxMngr.update();
 	updateMirrors();
 }
 
@@ -82,58 +91,59 @@ void ofApp::draw(){
 	// render fbos by themselves
 	ofEnableDepthTest();
 
-	renderBackground();
+	render2dBackground();
 
 	renderTexShaders();
-	renderUVTextured();
-	renderUnlitMask();
-	renderLitMask();
+	render2dUVTextured();
+	render2dUnlitMask();
+	render2dLitMask();
 
 	textureUnlitBlend();
 	textureShadwBlend();
 
 	renderMirrorViews();
+	renderFullScene();
+
+	//// display fbos on screen
+	//ofDisableDepthTest();
+	//if (bBackground) { bgFbo.draw(0, 0); }
+	//else {}
+
+	//if (bTex) { texFbo.draw(0, 0); }
+	//else {}
+
+	//if (bMapMode) {
+	//	uvFbo.draw(0, 0);
+	//}
+	//else{
+	//	if (bDebug) {
+	//		if (!bLight) { unlitFbo.draw(0, 0); }
+	//		else { litFbo.draw(0, 0); }
+	//	}
+	//	else {
+	//		if (!bLight) { blendUFbo.draw(0, 0); }
+	//		else { blendSFbo.draw(0, 0); }
+	//	}
+	//}
 
 
-	// display fbos on screen
-	ofDisableDepthTest();
-	if (bBackground) { bgFbo.draw(0, 0); }
-	else {}
+	//// mirrors!
+	//if (bMirrors) {
+	//	cam1.begin();
+	//	// for each mirror
+	//	for (size_t i = 0; i < N_MIRRORS; i++) {
+	//		// bind the corresponding texture
+	//		mirrorFbo[i].getTexture().bind();
+	//		// and draw the mirror
+	//		mirrorMsh[i].draw();
+	//		//mirrorMsh[i].drawNormals( 20 );
+	//		// unbind texture and reset position
+	//		mirrorFbo[i].getTexture().unbind();
+	//	}
+	//	cam1.end();
+	//}
 
-	if (bTex) { texFbo.draw(0, 0); }
-	else {}
-
-	if (bMapMode) {
-		uvFbo.draw(0, 0);
-	}
-	else{
-		if (bDebug) {
-			if (!bLight) { unlitFbo.draw(0, 0); }
-			else { litFbo.draw(0, 0); }
-		}
-		else {
-			if (!bLight) { blendUFbo.draw(0, 0); }
-			else { blendSFbo.draw(0, 0); }
-		}
-	}
-
-
-	// mirrors!
-	if (bMirrors) {
-		// for each mirror
-		for (size_t i = 0; i < N_MIRRORS; i++) {
-			ofPushMatrix();
-			// bind the corresponding texture
-			mirrorFbo[i].getTexture().bind();
-			// go to the mirror position
-			ofTranslate(mirrorPos[i]);
-			// and draw the mirror
-			mirrorMsh[i].draw();
-			// unbind texture and reset position
-			mirrorFbo[i].getTexture().unbind();
-			ofPopMatrix();
-		}
-	}
+	sceneFullFbo.draw(0, 0);
 }
 
 
@@ -142,16 +152,16 @@ void ofApp::initMirrors() {
 	// initialize mirror dimensions & center positions
 	// mirror 0
 	mirrorDim[0] = ofVec2f(512, 1024);
-	mirrorPos[0] = ofVec3f(500, 512, 500);
+	mirrorPos[0] = ofVec3f( 800,   0,  800);
 	// mirror 1
 	mirrorDim[1] = ofVec2f(512, 1024);
-	mirrorPos[1] = ofVec3f(-500, 512, 500);
+	mirrorPos[1] = ofVec3f(-800,   0,  800);
 	// mirror 2
 	mirrorDim[2] = ofVec2f(512, 1024);
-	mirrorPos[2] = ofVec3f(500, 512, -500);
-	// mirror 3
+	mirrorPos[2] = ofVec3f( 800, 512, -500);
+	//// mirror 3
 	mirrorDim[3] = ofVec2f(512, 1024);
-	mirrorPos[3] = ofVec3f(-500, 512, -500);
+	mirrorPos[3] = ofVec3f(-500, 512, -800);
 
 	// create each mirror surface and camera
 	for (size_t i = 0; i < N_MIRRORS; i++) {
@@ -160,18 +170,28 @@ void ofApp::initMirrors() {
 		mirrorCam[i].setGlobalPosition( mirrorPos[i] - d );
 		mirrorCam[i].lookAt( cam1.getGlobalPosition() );
 		// create viewport and mesh according to dimensions
-		mirrorFbo[i].allocate(mirrorDim[i].x, mirrorDim[i].y);
-		mirrorMsh[i] = ofMesh::plane(mirrorDim[i].x, mirrorDim[i].y);	
+		mirrorFbo[i].allocate( mirrorDim[i].x, mirrorDim[i].y );
+		mirrorMsh[i].set( mirrorDim[i].x, mirrorDim[i].y );
+		mirrorMsh[i].setPosition( mirrorPos[i] );
+		mirrorMsh[i].lookAt( ofVec3f(0, 0, 0) );
+		// set the camera look at as the normal of the plane
+		ofVec3f n = mirrorMsh[i].getOrientationEuler();
+		mirrorCam[i].setOrientation( -n );
+		// add to the specific 3d scene
+		sceneFull.push_back( mirrorMsh[i] );
 	}
 }
 void ofApp::updateMirrors() {
 	// for each mirror
 	for (size_t i = 0; i < N_MIRRORS; i++) {
+		// calculate reflection vector
+		ofVec3f v   = mirrorPos[i] - cam1.getGlobalPosition();
+		ofVec3f n   = mirrorMsh[i].getOrientationEuler();
+		ofVec3f v_r = v - 2*n *( n.dot(v)/n.dot(n) );
 		// update each mirror camera position
-		ofVec3f d = cam1.getGlobalPosition() - mirrorPos[i];
-		mirrorCam[i].setGlobalPosition( mirrorPos[i] - d );
-		// update where each mirror camera looks at
-		mirrorCam[i].lookAt(cam1.getGlobalPosition());
+		mirrorCam[i].setGlobalPosition( mirrorPos[i] - v_r );
+		// update camera direction
+		mirrorCam[i].setOrientation( -n );
 	}
 }
 
@@ -194,31 +214,32 @@ void ofApp::renderTexShaders() {
 	texFbo.end();
 }
 
-void ofApp::renderBackground() {
+void ofApp::render2dBackground() {
 	bgFbo.begin();
 	ofClear(0, 0);
 	cam1.begin();
 		skyTex.bind();
-		ofDrawSphere(ofPoint(0, 0, 0), 5000);
+		skySphere.draw();
 		skyTex.unbind();
 	cam1.end();
 	bgFbo.end();
 }
 
-void ofApp::renderUVTextured() {
+void ofApp::render2dUVTextured() {
 	uvFbo.begin();
 	ofClear(0, 0);
 	cam1.begin();
 		dirLight.enable();
 		texFbo.getTexture().bind();
-		model.drawFaces();
+		if (!bAnimated) { model.drawFaces(); }
+		else { fbxMngr.draw(); }
 		texFbo.getTexture().unbind();
 		dirLight.disable();
 	cam1.end();
 	uvFbo.end();
 }
 
-void ofApp::renderUnlitMask() {
+void ofApp::render2dUnlitMask() {
 	unlitFbo.begin();
 	ofClear(0, 0);
 	cam1.begin();
@@ -227,19 +248,21 @@ void ofApp::renderUnlitMask() {
 		// and only use flat ambient light
 		ambLight.enable();
 		whiteTex.bind();
-		model.drawFaces();
+		if (!bAnimated) { model.drawFaces(); }
+		else { fbxMngr.draw(); }
 		whiteTex.unbind();
 		ambLight.disable();
 	cam1.end();
 	unlitFbo.end();
 }
-void ofApp::renderLitMask() {
+void ofApp::render2dLitMask() {
 	litFbo.begin();
 	ofClear(0, 0);
 	cam1.begin();
 		dirLight.enable();
 		whiteTex.bind();
-		model.drawFaces();
+		if (!bAnimated) { model.drawFaces(); }
+		else { fbxMngr.draw(); }
 		whiteTex.unbind();
 		dirLight.disable();
 	cam1.end();
@@ -278,17 +301,59 @@ void ofApp::renderMirrorViews() {
 			mirrorCam[i].begin();
 				if (bBackground) {
 					skyTex.bind();
-					ofDrawSphere(ofPoint(0, 0, 0), 5000);
+					skySphere.draw();
 					skyTex.unbind();
 				}
 				dirLight.enable();
 				texFbo.getTexture().bind();
-				model.drawFaces();
+				if (!bAnimated) { model.drawFaces(); }
+				else { fbxMngr.draw(); }
 				texFbo.getTexture().unbind();
 				dirLight.disable();
 			mirrorCam[i].end();
 		mirrorFbo[i].end();
 	}
+}
+
+void ofApp::renderBaseScene() {
+
+}
+void ofApp::renderFullScene() {
+	sceneFullFbo.begin();
+	ofClear(0, 0);
+	cam1.begin();
+		// render background
+		if (bBackground) {
+			skyTex.bind();
+			skySphere.draw();
+			skyTex.unbind();
+		}
+		// lights
+		dirLight.enable();
+		// render mirrors
+		if (bMirrors) {
+			for (size_t i = 0; i < N_MIRRORS; i++) {
+				// bind the corresponding texture
+				mirrorFbo[i].getTexture().bind();
+				// and draw the mirror
+				mirrorMsh[i].draw();
+				//mirrorMsh[i].drawNormals( 20 );
+				// unbind texture and reset position
+				mirrorFbo[i].getTexture().unbind();
+			}
+		}
+		// render objects
+		/*for (size_t i = 0; i < sceneMask.size(); i++); {
+
+		}*/
+		texFbo.getTexture().bind();
+		if (!bAnimated) { model.drawFaces(); }
+		else { fbxMngr.draw(); }
+		texFbo.getTexture().unbind();
+		// lights off
+		dirLight.disable();
+	cam1.end();
+	sceneFullFbo.end();
 }
 
 
@@ -328,6 +393,34 @@ void ofApp::keyPressed(int key){
 		case 'x':
 			bMirrors = !bMirrors;
 			break;
+		case 'a':
+			bAnimated = !bAnimated;
+			break;
+		case 's':		// save image
+			ofPixels  pix;
+			sceneFullFbo.readToPixels( pix );
+			stringstream ss;
+			ss << "img_" << ofGetUnixTime() << ".png";
+			ofSaveImage(pix, ss.str());
+			break;
+	}
+
+	if (fbxScene.getNumAnimations() > 1) {
+		if (key == OF_KEY_DOWN) {
+			int newAnimIndex = fbxMngr.getCurrentAnimationIndex() + 1;
+			if (newAnimIndex > fbxScene.getNumAnimations() - 1) {
+				newAnimIndex = 0;
+			}
+			fbxMngr.setAnimation(newAnimIndex);
+
+		}
+		else if (key == OF_KEY_UP) {
+			int newAnimIndex = fbxMngr.getCurrentAnimationIndex() - 1;
+			if (newAnimIndex < 0) {
+				newAnimIndex = fbxScene.getNumAnimations() - 1;
+			}
+			fbxMngr.setAnimation(newAnimIndex);
+		}
 	}
 }
 

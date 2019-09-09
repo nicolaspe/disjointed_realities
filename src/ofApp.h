@@ -27,39 +27,51 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		// === mirror functions
 		void initMirrors();
 		void updateMirrors();
+
+		// === render functions 
+		void renderTexShaders();
+
+		void render2dUnlitMask();
+		void render2dLitMask();
+		void render2dBackground();
+		void render2dUVTextured();
+		
+		void renderBaseScene();
+		void renderFullScene();
 		void renderMirrorViews();
 
-		void renderTexShaders();
-		void renderUnlitMask();
-		void renderLitMask();
-		void renderBackground();
-		void renderUVTextured();
 		void textureUnlitBlend();
 		void textureShadwBlend();
-		
+
+		// === controlling variables 
 		int texWid = 1024; int texHei = 1024;
 		int fboWid = 1280; int fboHei = 720;
 		int texInd = 0;
-		bool bLight, bMapMode, bDebug, bBackground, bInfo, bTex, bMirrors;
+		bool bLight, bMapMode, bDebug, bInfo, bTex;
+		bool bBackground, bMirrors, bAnimated;
 
 		ofFbo		texFbo;
 		ofShader	texShaders[4], blendShader, shadwShader;
 
-		ofFbo		unlitFbo, litFbo, bgFbo, uvFbo, blendUFbo, blendSFbo;
-		ofEasyCam   cam1;
-		ofLight		dirLight, ambLight;
-		ofTexture	skyTex, whiteTex;
+		ofFbo			unlitFbo, litFbo, bgFbo, uvFbo, blendUFbo, blendSFbo;
+		ofFbo			sceneBaseFbo, sceneFullFbo;
+		ofEasyCam		cam1;
+		ofLight			dirLight, ambLight;
+		ofTexture		skyTex, whiteTex;
+		ofSpherePrimitive	 skySphere;
 		ofxAssimpModelLoader model;
+		ofxFBXScene		fbxScene;
+		ofxFBXManager	fbxMngr;
 
 		ofVec2f		mirrorDim[N_MIRRORS];
 		ofVec3f		mirrorPos[N_MIRRORS], mirCamPos[N_MIRRORS];
 		ofCamera	mirrorCam[N_MIRRORS];
 		ofFbo		mirrorFbo[N_MIRRORS], mirrors;
-		ofMesh		mirrorMsh[N_MIRRORS];
+		ofPlanePrimitive	mirrorMsh[N_MIRRORS];
 
-		ofxFBXScene   fbxScene;
-		ofxFBXManager fbxMngr;
-
+		vector<ofNode>		sceneFull, sceneMask;
+		vector<ofTexture>	sceneTex;
 };
