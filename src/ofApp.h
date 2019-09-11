@@ -33,6 +33,7 @@ class ofApp : public ofBaseApp{
 
 		// === render functions 
 		void renderTexShaders();
+		void renderBackgroundTex();
 
 		void render2dUnlitMask();
 		void render2dLitMask();
@@ -51,17 +52,19 @@ class ofApp : public ofBaseApp{
 		int fboWid = 1280; int fboHei = 720;
 		int texInd = 0;
 		bool bLight, bMapMode, bDebug, bInfo, bTex;
-		bool bBackground, bMirrors, bAnimated;
+		bool bBackground, bBckgndTex, bMirrors, bAnimated;
 
-		ofFbo		texFbo;
-		ofShader	texShaders[4], blendShader, shadwShader;
+		ofFbo		texFbo, texBckgndFbo;
+		ofShader	texShaders[4], blendShader, shadwShader, bckgndShader;
 
 		ofFbo			unlitFbo, litFbo, bgFbo, uvFbo, blendUFbo, blendSFbo;
 		ofFbo			sceneBaseFbo, sceneFullFbo;
 		ofEasyCam		cam1;
 		ofLight			dirLight, ambLight;
 		ofTexture		skyTex, whiteTex;
-		ofSpherePrimitive	 skySphere;
+		ofSpherePrimitive	skySph;
+		ofCylinderPrimitive	skyCyl;
+		ofBoxPrimitive		skyBox;
 		ofxAssimpModelLoader model;
 		ofxFBXScene		fbxScene;
 		ofxFBXManager	fbxMngr;

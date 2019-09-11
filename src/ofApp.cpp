@@ -17,11 +17,13 @@ void ofApp::setup(){
 	bInfo = true;
 	bTex = false;
 	bBackground	= false;
+	bBckgndTex	= false;
 	bMirrors	= false;
 	bAnimated	= false;
 
 	// init Fbos
 	texFbo.allocate			(texWid, texHei, GL_RGBA);
+	texBckgndFbo.allocate	(texWid, texHei, GL_RGBA);
 	unlitFbo.allocate		(fboWid, fboHei, GL_RGBA);
 	litFbo.allocate			(fboWid, fboHei, GL_RGBA);
 	uvFbo.allocate			(fboWid, fboHei, GL_RGBA);
@@ -32,41 +34,46 @@ void ofApp::setup(){
 	sceneBaseFbo.allocate	(fboWid, fboHei, GL_RGBA);
 	sceneFullFbo.allocate	(fboWid, fboHei, GL_RGBA);
 
-
 	// init shaders
 	string vertex = "shaders/shader.vert";
-	texShaders[0].load(vertex, "shaders/white.frag");
-	texShaders[1].load(vertex, "shaders/basicColor.frag");
-    texShaders[2].load(vertex, "shaders/raymarch_alien.frag");
-    texShaders[3].load(vertex, "shaders/colorWall.frag");
-	blendShader.load(vertex, "shaders/maskBlend.frag");
-	shadwShader.load(vertex, "shaders/shadowBlend.frag");
+	texShaders[0].load	(vertex, "shaders/white.frag");
+	texShaders[1].load	(vertex, "shaders/basicColor.frag");
+    texShaders[2].load	(vertex, "shaders/raymarch_alien.frag");
+    texShaders[3].load	(vertex, "shaders/colorWall.frag");
+	blendShader.load	(vertex, "shaders/maskBlend.frag");
+	shadwShader.load	(vertex, "shaders/shadowBlend.frag");
+	bckgndShader.load	(vertex, "shaders/clouds.frag");
 
 	// init mesh/model
 	//ofLoadImage( skyTex, "imgs/eso0932a_sphere.jpg" );
-	//ofLoadImage( skyTex, "imgs/sky_horizon.jpg" );
-	ofLoadImage( skyTex, "imgs/sky_sea.jpg" );
+	ofLoadImage( skyTex, "imgs/sky_horizon.jpg" );
+	//ofLoadImage( skyTex, "imgs/sky_sea.jpg" );
 	ofLoadImage( whiteTex, "imgs/white.png" );
-	skySphere.setRadius( 5000 );
+	skySph.setRadius( 5000 );
+	skyCyl.set( 2500, 25000 );
+	skyCyl.setPosition(0, 200, 0);
+	skyCyl.rotate(90, 1, 0, 0);
 	model.loadModel( "models/nico_00_sit.obj" );
 	model.setRotation( 1, 180, 0, 0, 1 );
 	model.setPosition( 0, -100, 0 );
 
 	// init fbx
 	ofxFBXSceneSettings fbxSettings;
-	if (fbxScene.load("models/model.fbx", fbxSettings)) {
+	if (fbxScene.load("models/nico_00.fbx", fbxSettings)) {
+	//if (fbxScene.load("models/model.fbx", fbxSettings)) {
 		cout << "ofApp :: fbx scene load OK" << endl;
 	} else {
 		cout << "ofApp :: ERROR loading fbx scene" << endl;
 	}
 	fbxMngr.setup( &fbxScene );
-	fbxMngr.setScale( 2 );
-	fbxMngr.setAnimation( 1 );
+	fbxMngr.setScale( 5 );
+	fbxMngr.setPosition(0, -100, 0);
+	fbxMngr.setAnimation( 0 );
 
 	// init camera
     cam1.setPosition(1500, 1200, 2500);
     cam1.lookAt(ofVec3f(0, 1000, 000));
-	cam1.setFarClip(15000.);
+	cam1.setFarClip(10000.);
 
 	// init light
 	ambLight.setAmbientColor(ofColor(255));
@@ -81,12 +88,14 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	fbxMngr.update();
+	fbxMngr.lateUpdate();
+
 	updateMirrors();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofBackground(120 + 120*sin(ofGetElapsedTimef()));
+	//ofBackground(120 + 120*sin(ofGetElapsedTimef()));
 
 	// render fbos by themselves
 	ofEnableDepthTest();
@@ -94,6 +103,7 @@ void ofApp::draw(){
 	render2dBackground();
 
 	renderTexShaders();
+	renderBackgroundTex();
 	render2dUVTextured();
 	render2dUnlitMask();
 	render2dLitMask();
@@ -169,6 +179,7 @@ void ofApp::initMirrors() {
 		ofVec3f d = cam1.getGlobalPosition() - mirrorPos[i];
 		mirrorCam[i].setGlobalPosition( mirrorPos[i] - d );
 		mirrorCam[i].lookAt( cam1.getGlobalPosition() );
+		mirrorCam[i].setFarClip( 10000. );
 		// create viewport and mesh according to dimensions
 		mirrorFbo[i].allocate( mirrorDim[i].x, mirrorDim[i].y );
 		mirrorMsh[i].set( mirrorDim[i].x, mirrorDim[i].y );
@@ -191,7 +202,8 @@ void ofApp::updateMirrors() {
 		// update each mirror camera position
 		mirrorCam[i].setGlobalPosition( mirrorPos[i] - v_r );
 		// update camera direction
-		mirrorCam[i].setOrientation( -n );
+		mirrorCam[i].lookAt( mirrorMsh[i].getLookAtDir() );
+
 	}
 }
 
@@ -213,13 +225,23 @@ void ofApp::renderTexShaders() {
 		texShaders[texInd].end();
 	texFbo.end();
 }
+void ofApp::renderBackgroundTex() {
+	texBckgndFbo.begin();
+	ofClear(0, 0);
+		bckgndShader.begin();
+		bckgndShader.setUniform1f("u_time", ofGetElapsedTimef() / 2.);
+		bckgndShader.setUniform2f("u_resolution", texWid, texHei);
+		ofDrawRectangle(0, 0, texWid, texHei);
+		bckgndShader.end();
+	texBckgndFbo.end();
+}
 
 void ofApp::render2dBackground() {
 	bgFbo.begin();
 	ofClear(0, 0);
 	cam1.begin();
 		skyTex.bind();
-		skySphere.draw();
+		skySph.draw();
 		skyTex.unbind();
 	cam1.end();
 	bgFbo.end();
@@ -299,11 +321,17 @@ void ofApp::renderMirrorViews() {
 		mirrorFbo[i].begin();
 		ofClear(255, 255, 255, 1);
 			mirrorCam[i].begin();
-				if (bBackground) {
-					skyTex.bind();
-					skySphere.draw();
-					skyTex.unbind();
-				}
+				// render background
+				// -- select texture
+				if(bBckgndTex) { skyTex.bind(); }
+				else { texBckgndFbo.getTexture().bind(); }
+				// -- render mesh
+				if (bBackground) { skySph.draw(); }
+				else { skyCyl.draw(); }
+				// -- unbind texture
+				if (bBckgndTex) { skyTex.unbind(); }
+				else { texBckgndFbo.getTexture().unbind(); }
+				// render model
 				dirLight.enable();
 				texFbo.getTexture().bind();
 				if (!bAnimated) { model.drawFaces(); }
@@ -323,11 +351,15 @@ void ofApp::renderFullScene() {
 	ofClear(0, 0);
 	cam1.begin();
 		// render background
-		if (bBackground) {
-			skyTex.bind();
-			skySphere.draw();
-			skyTex.unbind();
-		}
+		// -- select texture
+		if (bBckgndTex) { skyTex.bind(); }
+		else { texBckgndFbo.getTexture().bind(); }
+		// -- render mesh
+		if (bBackground) { skySph.draw(); }
+		else { skyCyl.draw(); }
+		// -- unbind texture
+		if (bBckgndTex) { skyTex.unbind(); }
+		else { texBckgndFbo.getTexture().unbind(); }
 		// lights
 		dirLight.enable();
 		// render mirrors
@@ -387,6 +419,9 @@ void ofApp::keyPressed(int key){
 		case 'b':
 			bBackground = !bBackground;
 			break;
+		case 'v':
+			bBckgndTex = !bBckgndTex;
+			break;
 		case 't':
 			bTex = !bTex;
 			break;
@@ -395,6 +430,9 @@ void ofApp::keyPressed(int key){
 			break;
 		case 'a':
 			bAnimated = !bAnimated;
+			break;
+		case ' ':
+			fbxMngr.getCurrentAnimation().togglePlayPause();
 			break;
 		case 's':		// save image
 			ofPixels  pix;
@@ -412,7 +450,7 @@ void ofApp::keyPressed(int key){
 				newAnimIndex = 0;
 			}
 			fbxMngr.setAnimation(newAnimIndex);
-
+			cout << "new anim: " << newAnimIndex << endl;
 		}
 		else if (key == OF_KEY_UP) {
 			int newAnimIndex = fbxMngr.getCurrentAnimationIndex() - 1;
@@ -420,6 +458,7 @@ void ofApp::keyPressed(int key){
 				newAnimIndex = fbxScene.getNumAnimations() - 1;
 			}
 			fbxMngr.setAnimation(newAnimIndex);
+			cout << "new anim: " << newAnimIndex << endl;
 		}
 	}
 }
